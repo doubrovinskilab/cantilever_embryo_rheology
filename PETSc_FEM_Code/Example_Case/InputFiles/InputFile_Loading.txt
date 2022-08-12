@@ -1,0 +1,57 @@
+System_Type = IBM;
+System_OutputFolder = output;
+System_Dim = 3;
+System_end_time = 60000.0;     // End time [ms]
+System_dtime_save = 1000.0;    // dtime to save data [ms]
+
+Fluid_Solver_Type = IMPLICIT;
+Fluid_Solver_Method = MONO;
+Fluid_Mesh_File = Fluid/Fluid_Size_TwoFluids/Embreyo-Membrane;
+Fluid_Mesh_Type = gmsh;
+Fluid_Imp_dt =    2.0;        // This is the implicit dt [ms]
+Fluid_Imp_eps =   0.0;
+
+Fluid_ElemClass_U = P1b;
+Fluid_ElemClass_P = P1;
+Fluid_Variables_mu = 1;
+Fluid_Calc_Viscosity = two_constants_one_ellipsoid;
+Fluid_Variables_mu2 = 0.5;
+Fluid_Ellipsoid_A = 252.5;
+Fluid_Ellipsoid_B =  89.0;
+Fluid_Ellipsoid_C =  89.0;
+Fluid_Domain_Center = 0.0,0.0,0.0;
+
+Solid_Mesh_File = Solid/Embreyo-Cells-Hexagon-A251-B88-C88-Tracking-Seal;
+Solid_Mesh_Type = vtk;
+Solid_Force_LE_Type = le_id;
+Solid_Force_LE_K = 0.02;
+
+Solid_Constrain_Type = one_ellipsoid;
+Solid_Constrain_Ellipsoid_A = 251.0;
+Solid_Constrain_Ellipsoid_B =  88.0;
+Solid_Constrain_Ellipsoid_C =  88.0;
+Solid_Constrain_ds =  1;
+
+Solid_Reload = true;
+Solid_Reload_File = output/S_49;
+Solid_Reload_Time = 49000;
+Solid_Reload_Saved_Step = 49;
+
+// Boundary conditions: 
+// Group #, Type, Value1, Value2 (if possible)
+// Type: i=INTERNAL, d=DIRICHLET, n=NEUMANN, r=ROBIN
+
+Boundary_Ux = 0,d,0;   // Embreyo Edge  
+Boundary_Uy = 0,d,0;   // Embreyo Edge  
+Boundary_Uz = 0,d,0;   // Embreyo Edge  
+
+Boundary_P = 0,i;    // Embreyo Edge   
+
+Boundary_S = 0,fse,241.00,68.0,1.84E-06,1.0,0.032360,0.0;
+Boundary_S = 1,fse,244.25,74.5,1.84E-06,1.0,0.103234,0.0;
+Boundary_S = 2,fse,247.75,81.5,1.84E-06,1.0,0.174108,0.0;
+Boundary_S = 3,nb;
+
+DirichletNode_Coor = 0.0,-69.0,0.0;
+DirichletNode_PValue = 0.0;
+
